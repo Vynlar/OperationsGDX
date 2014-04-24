@@ -45,6 +45,7 @@ public class MainMenuScreen implements Screen{
 		startGame.setTransform(true);
 		startGame.setScale(buttonScale);
 		startGame.setPosition((Gdx.graphics.getWidth()/2)-(startGame.getWidth()*buttonScale/2), (Gdx.graphics.getHeight()/5)*2);
+		//listener on the start game button
 		startGame.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
@@ -57,14 +58,10 @@ public class MainMenuScreen implements Screen{
 					}
 				};
 				actor.addAction(Actions.sequence(Actions.moveBy(Gdx.graphics.getWidth(), 0F, 0.8F, Interpolation.exp5), changeScreen));
-				//game.setScreen(game.selectScreen);
-				Gdx.app.log("", "pressed");
 			}
 			
 		});
 		stage.addActor(startGame);
-		
-		Gdx.app.log("", "Loaded main menu");
 	}
 
 	@Override
@@ -76,11 +73,11 @@ public class MainMenuScreen implements Screen{
 		//update and render stage
 		stage.act(Gdx.graphics.getDeltaTime());
 		stage.draw();
-		Gdx.app.log("", "drew");
 	}
 
 	@Override
 	public void resize(int width, int height) {
+		//adjust changing viewport
 		stage.getViewport().update(width, height, true);
 	}
 
