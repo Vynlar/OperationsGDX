@@ -1,20 +1,23 @@
 package com.enx3s.operations.screens;
 
-import java.io.File;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
@@ -25,6 +28,7 @@ public class GameSelectScreen implements Screen{
 	Operations game;
 	Texture background;
 	Stage stage;
+	float fontScale = 1.7f;
 	
 	public GameSelectScreen(Operations game)
 	{
@@ -57,21 +61,30 @@ public class GameSelectScreen implements Screen{
 		image.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		stage.addActor(image);
 		
-		//setup back button
-		TextureRegion backTexture = new TextureRegion(new Texture("button_blank.png"));
-		TextureRegionDrawable backDrawable = new TextureRegionDrawable(backTexture); 
-		TextButtonStyle backStyle = new TextButtonStyle(backDrawable, backDrawable, backDrawable, new BitmapFont(Gdx.files.internal("font.fnt"), Gdx.files.internal("font.png"), false));
-		TextButton backButton = new TextButton("Back", backStyle);
-		backButton.addListener(new ChangeListener() {
+		//back button
+		Action changeScreen = new Action() {
+
 			@Override
-			public void changed(ChangeEvent event, Actor actor) {
-				game.setScreen(game.mainMenu);
+			public boolean act(float delta) {
+				game.setScreen(game.mainMenuScreen);
+				return false;
 			}
-		});
-		backButton.setTransform(true);
-		backButton.setScale(0.5f);
-		backButton.setPosition(30, 50);
-		stage.addActor(backButton);
+		};
+		
+		float buttonOffset = Gdx.graphics.getHeight()/18;
+		stage.addActor(Operations.makeButton("Back", 0 + buttonOffset, false, changeScreen, fontScale));
+		
+		//normal start game button
+		stage.addActor(Operations.makeButton("Normal", ((Gdx.graphics.getHeight()/6)*3) + buttonOffset, true, changeScreen, fontScale));
+		stage.addActor(Operations.makeButton("Infinite", ((Gdx.graphics.getHeight()/6)*2) + buttonOffset, true, changeScreen, fontScale));
+		stage.addActor(Operations.makeButton("Tower", ((Gdx.graphics.getHeight()/6) + buttonOffset), true, changeScreen, fontScale));
+		
+		//title label
+		Label title = new Label("Game Mode", new LabelStyle(new BitmapFont(Gdx.files.internal("font.fnt"), false), Color.WHITE));
+		title.setFontScale(fontScale*1.2f);
+		title.setScale(fontScale);
+		title.setPosition(Gdx.graphics.getWidth()/2 - title.getTextBounds().width/2, (Gdx.graphics.getHeight()/5)*4); //centers text
+		stage.addActor(title);
 	}
 
 	@Override
