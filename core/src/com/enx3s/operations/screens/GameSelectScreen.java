@@ -6,20 +6,12 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Action;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
-import com.badlogic.gdx.scenes.scene2d.utils.Align;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.enx3s.operations.Operations;
 
@@ -29,6 +21,7 @@ public class GameSelectScreen implements Screen{
 	Texture background;
 	Stage stage;
 	float fontScale = 1.7f;
+	float buttonOffset = Gdx.graphics.getHeight()/18;
 	
 	public GameSelectScreen(Operations game)
 	{
@@ -71,8 +64,8 @@ public class GameSelectScreen implements Screen{
 			}
 		};
 		
-		float buttonOffset = Gdx.graphics.getHeight()/18;
-		stage.addActor(Operations.makeButton("Back", 0 + buttonOffset, false, changeScreen, fontScale));
+		TextButton back = Operations.makeButton("Back", 0 + buttonOffset, false, changeScreen, fontScale);
+		stage.addActor(back);
 		
 		//normal start game button
 		stage.addActor(Operations.makeButton("Normal", ((Gdx.graphics.getHeight()/6)*3) + buttonOffset, true, changeScreen, fontScale));

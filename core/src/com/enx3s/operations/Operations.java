@@ -38,7 +38,7 @@ public class Operations extends Game {
 		TextButton button = new TextButton(text, style);
 		button.setPosition(-button.getWidth(), y);
 		button.addAction(Actions.moveTo(Gdx.graphics.getWidth()/2 - button.getWidth()/2, y, 0.8f, Interpolation.pow5Out));
-		button.getCells().get(0).padTop(30f);
+		button.getCells().get(0).padTop(40f);
 		button.getLabel().setFontScale(fontScale);
 		button.addListener(new ChangeListener() {
 			@Override

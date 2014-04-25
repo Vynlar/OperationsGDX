@@ -6,19 +6,11 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Action;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.enx3s.operations.Operations;
 
@@ -28,6 +20,7 @@ public class MainMenuScreen implements Screen{
 	Texture background;
 	Stage stage;
 	float fontScale = 1.7f;
+	float buttonOffset = Gdx.graphics.getHeight()/18;
 	
 	public MainMenuScreen(final Operations game)
 	{
@@ -53,7 +46,7 @@ public class MainMenuScreen implements Screen{
 				return false;
 			}
 		};
-		stage.addActor(Operations.makeButton("Start Game", (Gdx.graphics.getHeight()/5)*2.5F, true, changeScreen, fontScale));
+		stage.addActor(Operations.makeButton("Start Game", (Gdx.graphics.getHeight()/6)*3 + buttonOffset, true, changeScreen, fontScale));
 		
 		//title label
 		Label title = new Label("Operations", new LabelStyle(new BitmapFont(Gdx.files.internal("font.fnt"), false), Color.WHITE));
