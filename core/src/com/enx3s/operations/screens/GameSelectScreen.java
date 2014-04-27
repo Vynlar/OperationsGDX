@@ -64,11 +64,20 @@ public class GameSelectScreen implements Screen{
 			}
 		};
 		
+		Action normalGameModeAction = new Action() {
+
+			@Override
+			public boolean act(float delta) {
+				game.setScreen(game.normalGameScreen);
+				return false;
+			}
+		};
+		
 		TextButton back = Operations.makeButton("Back", 0 + buttonOffset, false, changeScreen, fontScale);
 		stage.addActor(back);
 		
 		//normal start game button
-		stage.addActor(Operations.makeButton("Normal", ((Gdx.graphics.getHeight()/6)*3) + buttonOffset, true, changeScreen, fontScale));
+		stage.addActor(Operations.makeButton("Normal", ((Gdx.graphics.getHeight()/6)*3) + buttonOffset, true, normalGameModeAction, fontScale));
 		stage.addActor(Operations.makeButton("Infinite", ((Gdx.graphics.getHeight()/6)*2) + buttonOffset, true, changeScreen, fontScale));
 		stage.addActor(Operations.makeButton("Tower", ((Gdx.graphics.getHeight()/6) + buttonOffset), true, changeScreen, fontScale));
 		

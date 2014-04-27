@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.enx3s.operations.grid.Tile.Type;
 import com.enx3s.operations.screens.GameScreen;
 import com.enx3s.operations.screens.GameSelectScreen;
 import com.enx3s.operations.screens.MainMenuScreen;
@@ -21,11 +22,13 @@ public class Operations extends Game {
 	
 	public MainMenuScreen mainMenuScreen;
 	public GameSelectScreen selectScreen;
+	public GameScreen normalGameScreen;
 	
 	@Override
 	public void create() {
 		mainMenuScreen = new MainMenuScreen(this);
 		selectScreen = new GameSelectScreen(this);
+		normalGameScreen = new GameScreen(GameScreen.Type.NORMAL);
 		this.setScreen(mainMenuScreen);
 	}
 	
@@ -38,7 +41,7 @@ public class Operations extends Game {
 		TextButton button = new TextButton(text, style);
 		button.setPosition(-button.getWidth(), y);
 		button.addAction(Actions.moveTo(Gdx.graphics.getWidth()/2 - button.getWidth()/2, y, 0.8f, Interpolation.pow5Out));
-		button.getCells().get(0).padTop(40f);
+		button.getCells().get(0).padTop(20f);
 		button.getLabel().setFontScale(fontScale);
 		button.addListener(new ChangeListener() {
 			@Override
