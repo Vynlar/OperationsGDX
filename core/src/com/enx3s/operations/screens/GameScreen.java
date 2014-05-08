@@ -51,7 +51,6 @@ public class GameScreen implements Screen{
 		int width = Gdx.graphics.getWidth();
 		Tile.Type[] types = Tile.Type.values();
 		TextureRegion texture = new TextureRegion(new Texture("tile.png"));
-		Tile.Type[][] tiles = new Tile.Type[gridWidth][gridHeight];
 		int operationCount = 0;
 		//fill with numbers
 		for(int i = 0; i < gridWidth; i++)
@@ -59,25 +58,8 @@ public class GameScreen implements Screen{
 			{
 				int random = (int) (Math.random()*9);
 				Tile.Type type = types[random];
-				tiles[i][j] = type;
-			}
-		
-		for(int i = 0; i < gridWidth; i++)
-			for(int j = 0; j < gridHeight; j++)
-			{
-				if(Math.random() < 0.1)
-				{
-					tiles[i][j] = types[(int)((Math.random()*4)+10)];
-					operationCount++;
-				}
-			}
-
-		for(int i = 0; i < gridWidth; i++)
-			for(int j = 0; j < gridHeight; j++)
-			{
-				Tile tile = new Tile(tiles[i][j], texture, new Point(i,j), this);
-				tile.setPosition(i*width/8, j*width/8);
-				stage.addActor(tile);
+				stage.addActor(new Tile(types[random], texture, new Point(i,j), this));
+				
 			}
 		
 		tileManager = new TileManager();

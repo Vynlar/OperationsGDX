@@ -20,7 +20,7 @@ public class Tile extends ImageTextButton{
 	
 	public enum Type
 	{
-		zero, one, two, three, four, five, six, seven, eight, nine, add, subtract, multiply, divide, equals 
+		zero, one, two, three, four, five, six, seven, eight, nine
 	}
 	
 	public Tile(Type type, TextureRegion texture, Point pos, GameScreen screen)
@@ -29,27 +29,7 @@ public class Tile extends ImageTextButton{
 		this.screen = screen;
 		this.pos = pos;
 		this.type = type;
-		if(type.ordinal() < 9)
-			this.setText(Integer.toString(type.ordinal()));
-		else
-		{
-			switch (type){
-			case add: this.setText("+");
-			break;
-			
-			case subtract: this.setText("-");
-			break;
-			
-			case multiply: this.setText("x");
-			break;
-			
-			case divide: this.setText("/");
-			break;
-			
-			case equals: this.setText("=");
-			break;
-			}
-		}
+		this.setText(Integer.toString(type.ordinal()));
 		selected = false;
 		
 		this.addListener(new ChangeListener() {

@@ -12,6 +12,18 @@ public class Combo {
 	private ArrayList<Tile> tiles;
 	TileManager manager;
 	Color color;
+	int input1, input2, result;
+	int cutoff;
+	Operator operator;
+	Step step;
+	
+	public enum Operator {
+		add, subtract, multiply, divide
+	}
+	
+	public enum Step {
+		input1, operator, input2, equals, result
+	}
 	
 	public Combo(TileManager manager, Tile tile)
 	{
@@ -20,6 +32,11 @@ public class Combo {
 		tile.setColor(color);
 		tiles.add(tile);
 		this.manager = manager;
+		step = Step.input1;
+		input1 = 0;
+		input2 = 0;
+		result = 0;
+		cutoff = 0;
 	}
 	
 	public void addTile(Tile tile)
@@ -42,14 +59,30 @@ public class Combo {
 			tile.setColor(color);
 			tiles.add(tile);
 		}
+		isValid();
 	}
 	
 	public boolean isValid()
 	{
-		Iterator<Tile> iterator = tiles.iterator();
-		while(iterator.hasNext())
-		{
-			Tile tile = iterator.next();
+		switch(step) {
+		case input1: 
+			input1 *= 10;
+			input1 += Integer.parseInt(getLastTile().getText().toString());
+			break;
+		case operator:
+			
+			break;	
+		case input2:
+			input2 *= 10;
+			input2 += Integer.parseInt(getLastTile().getText().toString());
+			break;
+		case equals:
+			
+			break;
+		case result:
+			result *= 10;
+			result += Integer.parseInt(getLastTile().getText().toString());
+			break;
 		}
 		return false;
 	}
@@ -61,14 +94,17 @@ public class Combo {
 	
 	public void removeLastTile()
 	{
-		tiles.get(tiles.size()-1).setColor(Color.WHITE);
-		if(tiles.size()-1 != 0)
+		if(step == Step.input1 || step == Step.input2 || step == Step.result && tiles.size() - 1 > cutoff)
 		{
-			tiles.remove(tiles.size()-1);
-		}
-		else
-		{
-			manager.setSelecting(false);
+			tiles.get(tiles.size()-1).setColor(Color.WHITE);
+			if(tiles.size()-1 != 0)
+			{
+				tiles.remove(tiles.size()-1);
+			}
+			else
+			{
+				manager.setSelecting(false);
+			}
 		}
 	}
 }
