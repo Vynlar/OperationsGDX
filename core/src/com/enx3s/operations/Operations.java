@@ -36,7 +36,7 @@ public class Operations extends Game {
 	public static TextButton makeButton(String text, float y, final boolean forwards, final Action action, float fontScale)
 	{
 		TextureRegion texture = new TextureRegion(new Texture("button_blank.png"));
-		TextureRegionDrawable drawable = new TextureRegionDrawable(texture); 
+		TextureRegionDrawable drawable = new TextureRegionDrawable(texture);
 		TextButtonStyle style = new TextButtonStyle(drawable, drawable, drawable, new BitmapFont(Gdx.files.internal("font.fnt"), false));
 		TextButton button = new TextButton(text, style);
 		button.setPosition(-button.getWidth(), y);

@@ -3,6 +3,7 @@ package com.enx3s.operations;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.enx3s.operations.grid.Tile;
 import com.enx3s.operations.grid.TileManager;
@@ -22,21 +23,22 @@ public class Combo {
 	}
 	
 	public enum Step {
-		input1, operator, input2, equals, result
+		in1, operator, in2, equals, result
 	}
 	
 	public Combo(TileManager manager, Tile tile)
-	{
+	{	
 		tiles = new ArrayList<Tile>();
 		color = Color.BLUE;
 		tile.setColor(color);
 		tiles.add(tile);
 		this.manager = manager;
-		step = Step.input1;
 		input1 = 0;
 		input2 = 0;
 		result = 0;
 		cutoff = 0;
+		step = Step.in1;
+		update();
 	}
 	
 	public void addTile(Tile tile)
@@ -58,33 +60,83 @@ public class Combo {
 		{
 			tile.setColor(color);
 			tiles.add(tile);
+			update();
 		}
-		isValid();
 	}
 	
-	public boolean isValid()
+	public void update()
 	{
+		Gdx.app.log("oper", "updated");
 		switch(step) {
-		case input1: 
+		case in1: 
 			input1 *= 10;
 			input1 += Integer.parseInt(getLastTile().getText().toString());
+			Gdx.app.log("oper", "input1");
 			break;
 		case operator:
-			
+			step = Step.in2;
+			cutoff = tiles.size();
+			Gdx.app.log("oper", "operator: " + input1);
 			break;	
-		case input2:
+		case in2:
 			input2 *= 10;
 			input2 += Integer.parseInt(getLastTile().getText().toString());
+			Gdx.app.log("oper", "input2");
 			break;
 		case equals:
-			
+			step = Step.result;
+			cutoff = tiles.size();
+			Gdx.app.log("oper", "equals");
 			break;
 		case result:
 			result *= 10;
 			result += Integer.parseInt(getLastTile().getText().toString());
+			Gdx.app.log("oper", "result");
+			if(isValid())
+			{
+				manager.destroyTiles();
+			}
 			break;
 		}
+	}
+	
+	public boolean isValid()
+	{
+		switch(operator)
+		{
+		case add:
+			if(input1 + input2 == result)
+				return true;
+			break;
+		case divide:
+			if(input1 / input2 == result)
+				return true;
+			break;
+		case multiply:
+			if(input1 * input2 == result)
+				return true;
+			break;
+		case subtract:
+			if(input1 - input2 == result)
+				return true;
+			break;
+		default:
+			return false;
+		}
 		return false;
+	}
+	
+	public void setOperator(Operator operator)
+	{
+		this.operator = operator;
+		step = Step.operator;
+		update();
+	}
+	
+	public void setEquals()
+	{
+		step = Step.equals;
+		update();
 	}
 	
 	public Tile getLastTile()
@@ -94,7 +146,7 @@ public class Combo {
 	
 	public void removeLastTile()
 	{
-		if(step == Step.input1 || step == Step.input2 || step == Step.result && tiles.size() - 1 > cutoff)
+		if((step == Step.in1 || step == Step.in2 || step == Step.result) && (tiles.size() - 1 > cutoff || tiles.size() == 1))
 		{
 			tiles.get(tiles.size()-1).setColor(Color.WHITE);
 			if(tiles.size()-1 != 0)
