@@ -13,7 +13,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.enx3s.operations.grid.Tile.Type;
 import com.enx3s.operations.screens.GameScreen;
 import com.enx3s.operations.screens.GameSelectScreen;
 import com.enx3s.operations.screens.MainMenuScreen;
